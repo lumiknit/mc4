@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour
     public static float gameEndTime;
     public static float gameDuration { get { return gameEndTime - gameBeginningTime; } }
 
+    public static float spawnTimer;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -31,8 +33,7 @@ public class GameManager : MonoBehaviour
         playerOz = GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>();
 
         for(int i = 0; i < 30; i++) {
-            Vector3 p = new Vector3(Random.Range(-200f, 200f), 0.3f, Random.Range(-200f, 200f));
-            Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
+            SpawnRowingNPC();
         }
 
         GetComponent<SpawnRings>().Spawn();
@@ -41,6 +42,7 @@ public class GameManager : MonoBehaviour
         fadeInPanel = GameObject.Find("FadeInPanel");
         var image = fadeInPanel.GetComponent<Image>();
         image.color = new Color(0f, 0f, 0f, 1f);
+        spawnTimer = 0f;
     }
 
     // Update is called once per frame
@@ -70,13 +72,20 @@ public class GameManager : MonoBehaviour
             camera.transform.rotation = Quaternion.LookRotation(playerOz.transform.position - p, Vector3.up);
         }
 
-
+        /* Beginning Game */
         if(Time.time - gameBeginningTime < 2f) {
             var image = fadeInPanel.GetComponent<Image>();
             image.color = new Color(0f, 0f, 0f, 1f - (Time.time - gameBeginningTime) / 2f);
+        }   
+
+        /* Respawn */
+        spawnTimer -= Time.deltaTime;
+        if(spawnTimer < 0f) {
+            SpawnRowingNPC();
+            spawnTimer = 6f;
         }
 
-
+        /* Ending Game */
         if(playerOz.lassitude) {
             FinishGame();
         }
@@ -103,6 +112,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }    // Start is called before the first frame update
+
+
+    public void SpawnRowingNPC() {
+        Vector3 p = new Vector3(Random.Range(-200f, 200f), 0.3f, Random.Range(-200f, 200f));
+        //Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
+    }
 
 
     

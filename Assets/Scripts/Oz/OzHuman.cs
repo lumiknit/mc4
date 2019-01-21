@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OzHuman : MonoBehaviour
 {
-    public const float LIMIT_IMPULSE = 10f;
+    public const float LIMIT_IMPULSE = 5f;
 
     public Rigidbody rigid;
 
@@ -186,6 +186,8 @@ public class OzHuman : MonoBehaviour
         boat = top.Find("boat").gameObject;
         SetBoat(boat);
         rigid = GetComponent<Rigidbody>();
+
+        Physics.IgnoreCollision(armature.GetComponent<Collider>(), oar.GetComponent<Collider>());
     }
 
     public void SetBoat(GameObject boat) {

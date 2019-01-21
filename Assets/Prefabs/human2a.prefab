@@ -399,7 +399,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distanceThreshold: 10
-  font: {fileID: 12800000, guid: c0b5e9d23b55510449efeeed75d33746, type: 3}
   canvasPrefab: {fileID: 536432255, guid: 2d63851c32591984684fdf56c01d10ce, type: 3}
 --- !u!136 &4989406181488856935
 CapsuleCollider:
@@ -411,8 +410,8 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.3
-  m_Height: 3
+  m_Radius: 0.6
+  m_Height: 3.4
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &4414084691901307619
