@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class SpawnRings : MonoBehaviour
 {
-    public GameObject prefab;
-    public float minRadius = 2;
-    public float maxRadius = 50;
+    public GameObject ringPrefab;
+    public GameObject npcPrefab;
+    [Min(0.0f)]
+    public float minRadius = 10;
+    [Min(0.0f)]
+    public float maxRadius = 90;
+    [Min(0.0f)]
     public float minRingDistance = 2;
+    [Range(0, 1)]
+    public float npcSpawnRate = 0.75f;
+    [Min(0)]
     public int maxLoopIteration = 70;
+    [Min(0)]
     public int count = 30;
     public List<Material> materials;
 
@@ -23,15 +31,18 @@ public class SpawnRings : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            float r = Random.Range(minRadius, maxRadius);
-            float theta = Random.Range(0, 360);
-
             Vector3 position = new Vector3(0, 0, 0);
 
             int loop = 0;
             while (loop < maxLoopIteration)
             {
-                position = new Vector3(Mathf.Cos(theta) * r, 0, Mathf.Sin(theta) * r);
+                float r = Random.Range(minRadius, maxRadius);
+                float theta = Random.Range(0f, 360f);
+
+                float x = r * Mathf.Cos(theta);
+                float z = r * Mathf.Sin(theta);
+
+                position = new Vector3(x, 0, z);
                 bool success = true;
                 for (int j = 0; j < i - failure; j++)
                 {
@@ -53,10 +64,16 @@ public class SpawnRings : MonoBehaviour
             else
             {
                 positions.Add(position);
-                GameObject ring = Instantiate(prefab, position, Quaternion.Euler(90, 0, 0));
-
+                GameObject ring = Instantiate(ringPrefab, position, Quaternion.Euler(90, 0, 0));
                 int materialIndex = (int)Random.Range(0, materialsCount);
                 ring.GetComponent<MeshRenderer>().material = materials[materialIndex];
+
+                if (Random.Range(0f, 1f) > (1f - npcSpawnRate))
+                {
+                    Vector3 npcPosition = position - new Vector3(0, 1, 0);
+                    GameObject npc = Instantiate(npcPrefab, npcPosition, Quaternion.identity);
+                    Physics.IgnoreCollision(ring.transform.GetComponent<Collider>(), npc.transform.GetComponent<Collider>());
+                }
             }
         }
 
