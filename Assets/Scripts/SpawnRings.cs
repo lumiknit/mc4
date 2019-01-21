@@ -42,7 +42,7 @@ public class SpawnRings : MonoBehaviour
                 float x = r * Mathf.Cos(theta);
                 float z = r * Mathf.Sin(theta);
 
-                position = new Vector3(x, 0, z);
+                position = new Vector3(x, 0.5f, z);
                 bool success = true;
                 for (int j = 0; j < i - failure; j++)
                 {
@@ -72,7 +72,8 @@ public class SpawnRings : MonoBehaviour
                 {
                     Vector3 npcPosition = position - new Vector3(0, 1, 0);
                     GameObject npc = Instantiate(npcPrefab, npcPosition, Quaternion.identity);
-                    Physics.IgnoreCollision(ring.transform.GetComponent<Collider>(), npc.transform.GetComponent<Collider>());
+                    var fixedJoint = npc.AddComponent<FixedJoint>();
+                    fixedJoint.connectedBody = ring.GetComponent<Rigidbody>();
                 }
             }
         }
