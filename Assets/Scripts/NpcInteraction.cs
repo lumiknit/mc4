@@ -5,8 +5,10 @@ using UnityEngine.UI;
 
 public class NpcInteraction : MonoBehaviour
 {
+    enum NpcType { Kill, Playtime, Position, EnemyCount, Normal, Crazy, Count};
+
     public float distanceThreshold = 30f;
-    public Font font;
+    public GameObject canvasPrefab;
 
     private GameObject player;
     private GameObject canvas;
@@ -14,13 +16,17 @@ public class NpcInteraction : MonoBehaviour
 
     bool dead;
 
+    private NpcType npcType;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform.Find("human2a").gameObject;
-        canvas = GameObject.FindGameObjectWithTag("Canvas");
         hasInteracted = false;
         dead = false;
+
+        npcType = (NpcType)Random.Range(0, (int)NpcType.Count);
+        npcType = NpcType.Position;
     }
 
     // Update is called once per frame
@@ -83,22 +89,38 @@ public class NpcInteraction : MonoBehaviour
             DestroyImmediate(prevText);
         }
 
-        GameObject textObject = new GameObject("text", typeof(RectTransform));
-        textObject.transform.tag = "NPC-talk";
-        textObject.GetComponent<RectTransform>().anchoredPosition = new Vector3(66.5f, 31f, 0f);
+        GameObject panelObject = Instantiate(canvasPrefab);
+        panelObject.transform.tag = "NPC-talk";
 
-        Text text = textObject.AddComponent<Text>();
+        string npcText = "Hello world!";
 
-        text.text = Random.Range(0f, 10f).ToString() + ": Hello world!";
-        text.font = font;
-        text.fontSize = 50;
-        text.material = font.material;
-        text.color = Color.white;
-        text.horizontalOverflow = HorizontalWrapMode.Overflow;
+        switch(npcType)
+        {
+            case NpcType.Kill:
+                break;
+            case NpcType.Playtime:
+                break;
+            case NpcType.Position:
+                float radius = transform.position.magnitude;
+                float percent = 100f * radius / 474;
+                npcText = "여기는 중심으로부터 " + percent.ToString().Substring(0, 4) + "%...";
+                break;
+            case NpcType.EnemyCount:
+                break;
+            case NpcType.Normal:
+                npcText = "안녕!";
+                break;
+            case NpcType.Crazy:
+                npcText = "뭘 봐? 뒤질래?";
+                break;
+            default:
+                Debug.Log("NPC type error!");
+                break;
+        }
 
-        textObject.transform.SetParent(canvas.transform);
+        panelObject.transform.Find("Text").GetComponent<Text>().text = npcText;
 
-        Destroy(textObject, 5.0f);
+        Destroy(panelObject, 5.0f);
     }
 
     void OnCollisionEnter(Collision collision) {

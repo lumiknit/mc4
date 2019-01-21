@@ -1207,6 +1207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70422f8c0a936f24297ba1c42ecf2c6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rigid: {fileID: 0}
+  lassitude: 0
   txa: 0
   tya: 0
   tra: 1.5
@@ -1355,7 +1357,7 @@ GameObject:
   - component: {fileID: 380568635176912142}
   m_Layer: 0
   m_Name: Oz
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1642,10 +1644,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 100038, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 100024, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
       propertyPath: m_Layer
       value: 10
@@ -1654,15 +1652,7 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 100040, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100032, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
-      propertyPath: m_Layer
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 100034, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+    - target: {fileID: 100038, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
@@ -1674,11 +1664,15 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 100012, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+    - target: {fileID: 100032, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 100014, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+    - target: {fileID: 100034, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100040, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
@@ -1687,6 +1681,14 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100012, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 100014, guid: ad1ab3852ab192c4a9ae9a96e427e185, type: 3}
       propertyPath: m_Layer
       value: 10
       objectReference: {fileID: 0}
