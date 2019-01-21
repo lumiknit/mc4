@@ -15,7 +15,7 @@ public class OzAI : MonoBehaviour
         humanObject = transform.Find("human2a").gameObject;
         human = humanObject.GetComponent<OzHuman>();
 
-        ai = new ChasingAI1(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
+        ai = new NpcKillerAI();
     }
 
     // Update is called once per frame
@@ -128,6 +128,58 @@ public class OzAI : MonoBehaviour
                     RowLeft();
                     PauseFor(0.3f);
                 } else {
+                    RowRight();
+                    PauseFor(0.3f);
+                }
+            }
+        }
+    }
+
+    public class NpcKillerAI : AI
+    {
+        GameObject target;
+        public NpcKillerAI()
+        {
+            target = null;
+        }
+        public override void Step(OzAI ai, OzHuman human)
+        {
+            if (target == null)
+            {
+                PauseFor(5.0f);
+                target = GameObject.FindGameObjectsWithTag("NPC")[0];
+            }
+
+            var d = target.transform.position - human.transform.position;
+            var v = d.normalized;
+            var w = human.transform.rotation * new Vector3(0, 0, 1);
+            var dot = Vector3.Dot(v, w);
+            var cross = Vector3.Cross(v, w).y;
+            //Debug.Log("d = " + d);
+            if (d.magnitude < 5f && cross < 0 && dot > 0)
+            {
+                HSwing();
+                PauseFor(1f);
+            }
+            else if (human.rigid.velocity.magnitude < 2f)
+            {
+                RowFront();
+                PauseFor(1f);
+            }
+            else
+            {
+                if (dot >= 0.9f)
+                {
+                    RowFront();
+                    PauseFor(0.8f);
+                }
+                else if (cross > 0.1)
+                {
+                    RowLeft();
+                    PauseFor(0.3f);
+                }
+                else
+                {
                     RowRight();
                     PauseFor(0.3f);
                 }

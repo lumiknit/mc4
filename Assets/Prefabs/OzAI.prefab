@@ -24,6 +24,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: OzAI
       objectReference: {fileID: 0}
+    - target: {fileID: 380568635176912143, guid: 26a3a16074f00ed4aae0c7e281734137,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 380568635176912142, guid: 26a3a16074f00ed4aae0c7e281734137,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -94,11 +99,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 441551361707937541}
-    - target: {fileID: 380568634868477758, guid: 26a3a16074f00ed4aae0c7e281734137,
-        type: 3}
-      propertyPath: m_CollisionDetection
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5412378977983141328, guid: 26a3a16074f00ed4aae0c7e281734137,
         type: 3}
       propertyPath: m_ConnectedBody
@@ -304,6 +304,11 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 441551361107890763}
+    - target: {fileID: 380568634868477758, guid: 26a3a16074f00ed4aae0c7e281734137,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26a3a16074f00ed4aae0c7e281734137, type: 3}
 --- !u!4 &441551362088463578 stripped
