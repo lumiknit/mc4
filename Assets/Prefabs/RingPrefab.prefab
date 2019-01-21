@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 141218103026548742}
   - component: {fileID: 7206354711280654101}
   - component: {fileID: 7580376108635269581}
-  - component: {fileID: 1224043691890325307}
   - component: {fileID: 9136714638207762751}
   - component: {fileID: 2715726760478481472}
+  - component: {fileID: 1178829544378027971}
   m_Layer: 0
   m_Name: RingPrefab
   m_TagString: Ring
@@ -111,26 +111,12 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 1
---- !u!114 &1224043691890325307
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6819709052658114224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2503e8c3802f26c40b1ff295dd264910, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  buoyancy: 9.8
-  viscosity: 20
 --- !u!114 &9136714638207762751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,3 +143,17 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 4300000, guid: 6c5c7d15f795ca44a9a7c00a811bf078, type: 3}
+--- !u!114 &1178829544378027971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6819709052658114224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2503e8c3802f26c40b1ff295dd264910, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buoyancy: 9.8
+  viscosity: 20

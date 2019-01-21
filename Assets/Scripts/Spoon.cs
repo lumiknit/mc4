@@ -16,25 +16,63 @@ public class Spoon : MonoBehaviour
     public float velocityRate = 100f;
     public float accellerationRate = 30f;
 
+    private float rotation;
+
     // Start is called before the first frame update
     void Start()
     {
+        rotation = Random.Range(0f, 360f);
+
+        float r = Random.Range(10, 50);
+        float theta = Random.Range(0f, 360f);
+
+        float x = r * Mathf.Cos(theta);
+        float z = r * Mathf.Sin(theta);
+        
+        Vector3 position = new Vector3(x, 81f, z);
+
+        Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 100f);
+        position -= direction;
+
+        transform.position = position;
+        transform.rotation = Quaternion.Euler(0, rotation, -90);
 
 
         rbody = GetComponent<Rigidbody>();
         rotateAngle = transform.rotation.x;
         initHeight = transform.position.y;
-        vDir = (2*transform.right + transform.forward).normalized;
-        aDir = 2*transform.right.normalized;
+
+        Vector3 downVec = -Vector3.up;
+        Vector3 moveVec = Quaternion.Euler(0, rotation-90f, 0) * Vector3.right;
+
+        vDir = (downVec + moveVec).normalized;
+        aDir = downVec.normalized;
         rbody.AddForce(vDir * velocityRate, ForceMode.VelocityChange);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        rotateAngle -= (initHeight - transform.position.y) * Time.deltaTime * rotationRate;
-        rbody.rotation = Quaternion.Euler(rotateAngle, 90, -90);
-        rbody.AddForce(-aDir * Time.deltaTime * accellerationRate, ForceMode.VelocityChange);
+        if (rotateAngle > -90)
+            rotateAngle -= (initHeight - transform.position.y) * Time.fixedDeltaTime * rotationRate;
+        rbody.rotation = Quaternion.Euler(rotateAngle, rotation, -90);
+        rbody.AddForce(-aDir * Time.fixedDeltaTime * accellerationRate, ForceMode.VelocityChange);
         //Debug.Log(GetComponent<Transform>().position.y);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.tag == "Ring" ||
+            collision.transform.tag == "NPC")
+        {
+            Vector3 offset = (collision.transform.position - transform.position);
+            
+            if (offset.y >= 0)
+            {
+                collision.transform.parent = transform;
+                offset = offset.normalized * Mathf.Sqrt(3);
+                collision.transform.position = transform.position + offset;
+            }
+        }
     }
 }
