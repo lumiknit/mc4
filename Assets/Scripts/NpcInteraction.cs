@@ -26,7 +26,6 @@ public class NpcInteraction : MonoBehaviour
         dead = false;
 
         npcType = (NpcType)Random.Range(0, (int)NpcType.Count);
-        npcType = NpcType.Position;
     }
 
     // Update is called once per frame
@@ -97,25 +96,31 @@ public class NpcInteraction : MonoBehaviour
         switch(npcType)
         {
             case NpcType.Kill:
+                npcText = "지금까지 " + GameManager.killCount + "개가 사라졌구만.. 홀홀홀..";
                 break;
             case NpcType.Playtime:
+                npcText = "이 게임을 " + (Time.time - GameManager.gameBeginningTime).ToString().Split('.')[0] + "초나 했다고?";
                 break;
             case NpcType.Position:
                 float radius = transform.position.magnitude;
                 float percent = 100f * radius / 474;
-                npcText = "여기는 중심으로부터 " + percent.ToString().Substring(0, 4) + "%...";
+                npcText = "여기는 중심으로부터 " + percent.ToString().Split('.')[0] + "%...";
                 break;
             case NpcType.EnemyCount:
+                int enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+                if (enemyCount > 10)
+                    npcText = "아직 적이 " + enemyCount + "개나 남았다고?";
+                else
+                    npcText = "적이 " + enemyCount + "개밖에 안남았다고?";
                 break;
             case NpcType.Normal:
-                npcText = "안녕!";
+                npcText = "좋은 아침!";
                 break;
             case NpcType.Crazy:
                 npcText = "뭘 봐? 뒤질래?";
                 break;
             default:
-                Debug.Log("NPC type error!");
-                break;
+                throw new System.NotImplementedException();
         }
 
         panelObject.transform.Find("Text").GetComponent<Text>().text = npcText;

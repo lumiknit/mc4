@@ -81,8 +81,15 @@ public class GameManager : MonoBehaviour
             FinishGame();
         }
 
-        if(!float.IsNaN(gameEndTime)) {
-            if(Time.time - gameEndTime > 5f) {
+        if(!float.IsNaN(gameEndTime))
+        {
+            GameObject[] prevTexts = GameObject.FindGameObjectsWithTag("NPC-talk");
+            foreach (GameObject prevText in prevTexts)
+            {
+                DestroyImmediate(prevText);
+            }
+
+            if (Time.time - gameEndTime > 5f) {
                 SceneManager.LoadScene("GameOverScene");
             } else {
                 var progress1 = (Time.time - gameEndTime) / 5f;
@@ -112,6 +119,7 @@ public class GameManager : MonoBehaviour
     public void FinishGame() {
         if(float.IsNaN(gameEndTime)) {
             RecordGameEnd();
+
             Debug.Log("Game Over");
         }
     }
