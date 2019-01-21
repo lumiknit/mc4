@@ -124,7 +124,7 @@ public class NpcInteraction : MonoBehaviour
     }
 
     void OnCollisionEnter(Collision collision) {
-        if(collision.impulse.magnitude > 10f) {
+        if(collision.impulse.magnitude > 5f) {
             var fixedJoint = GetComponent<FixedJoint>();
             if(fixedJoint) {
                 Destroy(fixedJoint);

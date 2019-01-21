@@ -57,7 +57,7 @@ public class Spoon : MonoBehaviour
             rotateAngle -= (initHeight - transform.position.y) * Time.fixedDeltaTime * rotationRate;
         rbody.rotation = Quaternion.Euler(rotateAngle, rotation, -90);
         rbody.AddForce(-aDir * Time.fixedDeltaTime * accellerationRate, ForceMode.VelocityChange);
-        Debug.Log(GetComponent<Transform>().position);
+        // Debug.Log(GetComponent<Transform>().position);
     }
 
     private void OnCollisionEnter(Collision collision)
