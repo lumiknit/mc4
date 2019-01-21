@@ -15,9 +15,7 @@ public class OzAI : MonoBehaviour
         humanObject = transform.Find("human2a").gameObject;
         human = humanObject.GetComponent<OzHuman>();
 
-        ai = new SeekingAI1();
-
-        /*switch(Random.Range(0, 4)) {
+        switch(Random.Range(0, 6)) {
             case 0:
                 ai = new WanderingAI1();
                 break;
@@ -30,7 +28,13 @@ public class OzAI : MonoBehaviour
             case 3:
                 ai = new ChasingAI2(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
                 break;
-        } */
+            case 4:
+                ai = new SeekingAI1();
+                break;
+            case 5:
+                ai = new NpcKillerAI();
+                break;
+        }
     }
 
     // Update is called once per frame
@@ -174,7 +178,7 @@ public class OzAI : MonoBehaviour
             }
         }
     }
-
+    
     public class ChasingAI2 : AI {
         OzHuman target;
         public ChasingAI2(OzHuman target) {
@@ -239,6 +243,58 @@ public class OzAI : MonoBehaviour
                     RowRight();
                 }
                 PauseFor(0.4f);
+            }
+        }
+    }
+
+    public class NpcKillerAI : AI
+    {
+        GameObject target;
+        public NpcKillerAI()
+        {
+            target = null;
+        }
+        public override void Step(OzAI ai, OzHuman human)
+        {
+            if (target == null)
+            {
+                PauseFor(5.0f);
+                target = GameObject.FindGameObjectsWithTag("NPC")[0];
+            }
+
+            var d = target.transform.position - human.transform.position;
+            var v = d.normalized;
+            var w = human.transform.rotation * new Vector3(0, 0, 1);
+            var dot = Vector3.Dot(v, w);
+            var cross = Vector3.Cross(v, w).y;
+            //Debug.Log("d = " + d);
+            if (d.magnitude < 5f && cross < 0 && dot > 0)
+            {
+                HSwing();
+                PauseFor(1f);
+            }
+            else if (human.rigid.velocity.magnitude < 2f)
+            {
+                RowFront();
+                PauseFor(1f);
+            }
+            else
+            {
+                if (dot >= 0.9f)
+                {
+                    RowFront();
+                    PauseFor(0.8f);
+                }
+                else if (cross > 0.1)
+                {
+                    RowLeft();
+                    PauseFor(0.3f);
+                }
+                else
+                {
+                    RowRight();
+                    PauseFor(0.3f);
+                }
             }
         }
     }

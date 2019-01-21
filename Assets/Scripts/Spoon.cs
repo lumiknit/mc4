@@ -29,7 +29,7 @@ public class Spoon : MonoBehaviour
         float x = r * Mathf.Cos(theta);
         float z = r * Mathf.Sin(theta);
         
-        Vector3 position = new Vector3(x, 80f, z);
+        Vector3 position = new Vector3(x, 82f, z);
 
         Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 170f);
         position -= direction;
@@ -57,14 +57,14 @@ public class Spoon : MonoBehaviour
             rotateAngle -= (initHeight - transform.position.y) * Time.fixedDeltaTime * rotationRate;
         rbody.rotation = Quaternion.Euler(rotateAngle, rotation, -90);
         rbody.AddForce(-aDir * Time.fixedDeltaTime * accellerationRate, ForceMode.VelocityChange);
-        // Debug.Log(GetComponent<Transform>().position);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Ring" ||
             collision.transform.tag == "NPC" ||
-            collision.transform.tag == "Player")
+            collision.transform.tag == "Player" ||
+            collision.transform.tag == "Enemy")
         {
             Vector3 offset = (collision.transform.position - transform.position);
             
