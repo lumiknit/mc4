@@ -15,14 +15,18 @@ public class OzAI : MonoBehaviour
         humanObject = transform.Find("human2a").gameObject;
         human = humanObject.GetComponent<OzHuman>();
 
-        //ai = new ChasingAI1(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
-        ai = new WanderingAI1();
+        ai = new ChasingAI1(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(ai != null && !human.lassitude) {
+        if(human.lassitude) {
+            if(human.transform.position.y < -20) {
+                Destroy(human.gameObject.transform.parent.gameObject);
+                GameManager.IncreaseKillCount();
+            }
+        } else if(ai != null) {
             ai.RunStep(this, human);
         }
     }

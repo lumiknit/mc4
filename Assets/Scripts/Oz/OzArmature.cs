@@ -22,6 +22,8 @@ public class OzArmature : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
         /* Cascade impulse to the body */
-        ozHuman.CascadeImpulse(-collision.impulse, collision.contacts[0].point);
+        if(ozHuman && collision.contactCount > 0) {
+            ozHuman.CascadeImpulse(-collision.impulse, collision.contacts[0].point);
+        }
     }
 }
