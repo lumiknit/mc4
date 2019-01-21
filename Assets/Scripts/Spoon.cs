@@ -29,9 +29,9 @@ public class Spoon : MonoBehaviour
         float x = r * Mathf.Cos(theta);
         float z = r * Mathf.Sin(theta);
         
-        Vector3 position = new Vector3(x, 81f, z);
+        Vector3 position = new Vector3(x, 80f, z);
 
-        Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 100f);
+        Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 170f);
         position -= direction;
 
         transform.position = position;
@@ -57,22 +57,21 @@ public class Spoon : MonoBehaviour
             rotateAngle -= (initHeight - transform.position.y) * Time.fixedDeltaTime * rotationRate;
         rbody.rotation = Quaternion.Euler(rotateAngle, rotation, -90);
         rbody.AddForce(-aDir * Time.fixedDeltaTime * accellerationRate, ForceMode.VelocityChange);
-        //Debug.Log(GetComponent<Transform>().position.y);
+        Debug.Log(GetComponent<Transform>().position);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.transform.tag == "Ring" ||
-            collision.transform.tag == "NPC")
+            collision.transform.tag == "NPC" ||
+            collision.transform.tag == "Player")
         {
             Vector3 offset = (collision.transform.position - transform.position);
             
-            if (offset.y >= 0)
-            {
-                collision.transform.parent = transform;
-                offset = offset.normalized * Mathf.Sqrt(3);
-                collision.transform.position = transform.position + offset;
-            }
+            collision.transform.parent = transform;
+            offset = offset.normalized * Mathf.Sqrt(3);
+            collision.transform.position = transform.position + offset;
+            collision.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 }
