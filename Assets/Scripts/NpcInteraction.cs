@@ -5,34 +5,40 @@ using UnityEngine.UI;
 
 public class NpcInteraction : MonoBehaviour
 {
-    public float distanceThreshold = 10f;
+    public float distanceThreshold = 30f;
     public Font font;
 
     private GameObject player;
     private GameObject canvas;
     private bool hasInteracted;
 
+    bool dead;
+
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player");
+        player = GameObject.FindGameObjectWithTag("Player").transform.Find("human2a").gameObject;
         canvas = GameObject.FindGameObjectWithTag("Canvas");
         hasInteracted = false;
+        dead = false;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
-        Vector3 playerPos = player.transform.position;
-        Vector3 npcPos = transform.position;
-        if (Vector3.Distance(playerPos, npcPos) < distanceThreshold)
-        {
-            LookAtPlayer(playerPos, npcPos);
-            InteractPlayer();
-        }
-        else
-        {
-            hasInteracted = false;
+        if(!dead) {
+            Vector3 playerPos = player.transform.position;
+            Vector3 npcPos = transform.position;
+            Debug.Log("Distance = " + (playerPos - npcPos).magnitude);
+            if (Vector3.Distance(playerPos, npcPos) < distanceThreshold)
+            {
+                LookAtPlayer(playerPos, npcPos);
+                InteractPlayer();
+            }
+            else
+            {
+                hasInteracted = false;
+            }
         }
     }
 
@@ -40,8 +46,23 @@ public class NpcInteraction : MonoBehaviour
     {
         Vector3 relativePos = (playerPos - npcPos).normalized;
         relativePos.y = 0;
+        var fixedJoint = GetComponent<FixedJoint>();
+        Rigidbody ringRigid = null;
+        Vector3 anchor = Vector3.zero;
+        if(fixedJoint != null) {
+            ringRigid = fixedJoint.connectedBody;
+            anchor = fixedJoint.anchor;
+            DestroyImmediate(fixedJoint);
+            GetComponent<Rigidbody>().useGravity = false;
+        }
         Quaternion rotation = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * 5f);
+        if(ringRigid != null) {
+            var newFixedJoint = gameObject.AddComponent<FixedJoint>();
+            newFixedJoint.connectedBody = ringRigid;
+            newFixedJoint.anchor = anchor;
+            GetComponent<Rigidbody>().useGravity = true;
+        }
     }
 
     void InteractPlayer()
@@ -74,5 +95,17 @@ public class NpcInteraction : MonoBehaviour
         textObject.transform.SetParent(canvas.transform);
 
         Destroy(textObject, 5.0f);
+    }
+
+    void OnCollisionEnter(Collision collision) {
+        if(collision.impulse.magnitude > 10f) {
+            var fixedJoint = GetComponent<FixedJoint>();
+            if(fixedJoint) {
+                Destroy(fixedJoint);
+                GetComponent<Rigidbody>().useGravity = true;
+            }
+            dead = true;
+            GetComponent<Rigidbody>().AddForceAtPosition(collision.impulse, collision.contacts[0].point, ForceMode.Impulse);
+        }
     }
 }
