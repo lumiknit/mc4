@@ -23,9 +23,9 @@ public class OzOar : MonoBehaviour
 
     void OnCollisionEnter(Collision collision) {
         if(rigid && !rigid.useGravity) {
-            var dir = new Vector3(0, 3f, 0) + oarEnd.velocity;
+            var dir = new Vector3(0, 4f, 0) + oarEnd.velocity;
             if(collision.rigidbody != null) {
-                collision.rigidbody.AddForceAtPosition(dir * 4, collision.contacts[0].point, ForceMode.Impulse);
+                collision.rigidbody.AddForceAtPosition(dir * 5, collision.contacts[0].point, ForceMode.Impulse);
             }
         }
     }

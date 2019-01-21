@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnRowingNPC() {
         Vector3 p = new Vector3(Random.Range(-200f, 200f), 0.3f, Random.Range(-200f, 200f));
-        //Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
+        Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
     }
 
 
