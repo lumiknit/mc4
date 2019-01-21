@@ -684,8 +684,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1496704422}
-  m_LocalRotation: {x: -0.042996123, y: 0.14958893, z: 0.0065117003, w: 0.98779154}
-  m_LocalPosition: {x: 115.5685, y: -306.61407, z: -612.8483}
+  m_LocalRotation: {x: -0.09654069, y: 0, z: 0, w: 0.9953291}
+  m_LocalPosition: {x: 0, y: -1.86, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -767,27 +767,35 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 524450146, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
+      propertyPath: waterQuality
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 524450146, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
+      propertyPath: sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 656fde119942645aa8e062e04c119aa1, type: 2}
     - target: {fileID: 524450145, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: clearColor.r
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 524450145, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: clearColor.g
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 524450145, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: clearColor.b
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 524450148, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1357766464, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
+    - target: {fileID: 1933585931, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
-    - target: {fileID: 1933585931, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
+    - target: {fileID: 1357766464, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
       propertyPath: m_Layer
       value: 12
       objectReference: {fileID: 0}
@@ -970,11 +978,11 @@ MonoBehaviour:
   npcPrefab: {fileID: 4260852093472541525, guid: 155229497ca1d0e459351135d7ab7b14,
     type: 3}
   minRadius: 20
-  maxRadius: 190
+  maxRadius: 390
   minRingDistance: 2
   npcSpawnRate: 1
   maxLoopIteration: 70
-  count: 20
+  count: 50
   materials:
   - {fileID: 2100000, guid: 2f7c443da937f464aa0abbf169de7239, type: 2}
   - {fileID: 2100000, guid: 635bf2bf8dc816741be9cbc89d02c91e, type: 2}
@@ -997,7 +1005,7 @@ MonoBehaviour:
   spoonPrefab: {fileID: 2118410342, guid: 52a9c7fb15546e74f88ec28f173dd43d, type: 3}
   startTime: 5
   spawnInterval: 10
-  destroyInterval: 10
+  destroyInterval: 7
   minRadius: 10
   maxRadius: 50
 --- !u!1 &1909423204
@@ -1028,7 +1036,7 @@ Camera:
   m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -1100,7 +1108,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1757890996, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1757890996, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1145,6 +1153,10 @@ PrefabInstance:
     - target: {fileID: 1757890996, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
       propertyPath: m_LocalScale.y
       value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757890996, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
