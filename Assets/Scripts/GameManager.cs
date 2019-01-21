@@ -1,16 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
     OzHuman playerOz;
 
+    public GameObject fadeInPanel;
+
     public GameObject ozAI;
+
+    /* Game Statistics */
+    public static int killCount;
+    public static float gameBeginningTime;
+    public static float gameEndTime;
+    public static float gameDuration { get { return gameEndTime - gameBeginningTime; } }
 
     // Start is called before the first frame update
     void Start()
     {
+        instance = this;
+
+        killCount = 0;
+        gameBeginningTime = Time.time;
+        gameEndTime = float.NaN;
+
         playerOz = GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>();
 
         for(int i = 0; i < 30; i++) {
@@ -20,6 +37,10 @@ public class GameManager : MonoBehaviour
 
         GetComponent<SpawnRings>().Spawn();
         GetComponent<SpawnSpoon>().Spawn();
+
+        fadeInPanel = GameObject.Find("FadeInPanel");
+        var image = fadeInPanel.GetComponent<Image>();
+        image.color = new Color(0f, 0f, 0f, 1f);
     }
 
     // Update is called once per frame
@@ -48,5 +69,50 @@ public class GameManager : MonoBehaviour
             camera.transform.position = p;
             camera.transform.rotation = Quaternion.LookRotation(playerOz.transform.position - p, Vector3.up);
         }
+
+
+        if(Time.time - gameBeginningTime < 2f) {
+            var image = fadeInPanel.GetComponent<Image>();
+            image.color = new Color(0f, 0f, 0f, 1f - (Time.time - gameBeginningTime) / 2f);
+        }
+
+
+        if(playerOz.lassitude) {
+            FinishGame();
+        }
+
+        if(!float.IsNaN(gameEndTime)) {
+            if(Time.time - gameEndTime > 5f) {
+                SceneManager.LoadScene("GameOverScene");
+            } else {
+                var progress1 = (Time.time - gameEndTime) / 5f;
+                var progress2 = Mathf.Min(1f, (Time.time - gameEndTime) / 3f);
+                var panel = GameObject.Find("GameOverPanel");
+                var text = panel.transform.Find("Text").gameObject;
+                var c = panel.GetComponent<Image>().color;
+                panel.GetComponent<Image>().color = new Color(c.r, c.g, c.b, progress1);
+                var d = text.GetComponent<Text>().color;
+                text.GetComponent<Text>().color = new Color(d.r, d.g, d.b, progress2);
+            }
+        }
     }    // Start is called before the first frame update
+
+
+    
+    public static void IncreaseKillCount() {
+        killCount += 1;
+        Debug.Log("Current Kill Count: " + killCount);
+    }
+
+    public static void RecordGameEnd() {
+        gameEndTime = Time.time;
+    }
+
+
+    public void FinishGame() {
+        if(float.IsNaN(gameEndTime)) {
+            RecordGameEnd();
+            Debug.Log("Game Over");
+        }
+    }
 }

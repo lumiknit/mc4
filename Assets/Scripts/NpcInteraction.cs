@@ -26,10 +26,14 @@ public class NpcInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!dead) {
+        if(dead) {
+            if(transform.position.y < -20) {
+                GameManager.IncreaseKillCount();
+                Destroy(gameObject);
+            }
+        } else {
             Vector3 playerPos = player.transform.position;
             Vector3 npcPos = transform.position;
-            Debug.Log("Distance = " + (playerPos - npcPos).magnitude);
             if (Vector3.Distance(playerPos, npcPos) < distanceThreshold)
             {
                 LookAtPlayer(playerPos, npcPos);
