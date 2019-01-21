@@ -15,7 +15,8 @@ public class OzAI : MonoBehaviour
         humanObject = transform.Find("human2a").gameObject;
         human = humanObject.GetComponent<OzHuman>();
 
-        ai = new ChasingAI1(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
+        //ai = new ChasingAI1(GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>());
+        ai = new WanderingAI1();
     }
 
     // Update is called once per frame
@@ -108,7 +109,7 @@ public class OzAI : MonoBehaviour
             var w = human.transform.rotation * new Vector3(0, 0, 1);
             var dot = Vector3.Dot(v, w);
             var cross = Vector3.Cross(v, w).y;
-            Debug.Log("d = " + d);
+            //Debug.Log("d = " + d);
             if(d.magnitude < 5f && cross < 0 && dot > 0) {
                 HSwing();
                 PauseFor(1f);

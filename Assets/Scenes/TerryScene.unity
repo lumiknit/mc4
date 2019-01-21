@@ -472,6 +472,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 524450146, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
+      propertyPath: waterQuality
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b7e21461f97ce384cacf447aea3d2970, type: 3}
 --- !u!1 &789116139
@@ -870,6 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca204cd76da7ac542967d96826ba5b0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ozAI: {fileID: 0}
 --- !u!4 &1557570051
 Transform:
   m_ObjectHideFlags: 0

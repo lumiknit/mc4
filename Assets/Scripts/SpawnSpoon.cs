@@ -8,7 +8,9 @@ public class SpawnSpoon : MonoBehaviour
     [Min(0.0f)]
     public float startTime = 5.0f;
     [Min(0.0f)]
-    public float timeInterval = 10.0f;
+    public float spawnInterval = 10.0f;
+    [Min(0.0f)]
+    public float destroyInterval = 10.0f;
     [Min(0.0f)]
     public float minRadius = 10;
     [Min(0.0f)]
@@ -16,7 +18,7 @@ public class SpawnSpoon : MonoBehaviour
 
     public void Spawn()
     {
-        InvokeRepeating("LaunchSpoon", startTime, timeInterval);
+        InvokeRepeating("LaunchSpoon", startTime, spawnInterval);
     }
 
     void LaunchSpoon()
@@ -25,6 +27,6 @@ public class SpawnSpoon : MonoBehaviour
 
         GameObject spoon = Instantiate(spoonPrefab);
         //spoon.GetComponent<Transform>().localScale = new Vector3(3, 3, 3);
-        Destroy(spoon, 5.0f);
+        Destroy(spoon, destroyInterval);
     }
 }
