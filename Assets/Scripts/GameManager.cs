@@ -45,6 +45,8 @@ public class GameManager : MonoBehaviour
         spawnTimer = 0f;
     }
 
+    Vector3 cameraTargetPosition = Vector3.zero;
+
     // Update is called once per frame
     void Update()
     {
@@ -67,9 +69,11 @@ public class GameManager : MonoBehaviour
 
         { /* Camera */
             var camera = Camera.main;
-            var p = playerOz.transform.position + playerOz.transform.rotation * new Vector3(0f, 0f, -10f) + new Vector3(0f, 2f, 0f);
+            var pp = playerOz.transform.position;
+            var p = pp + (playerOz.transform.rotation * new Vector3(0f, 0f, -10f) + new Vector3(0f, 3f, 0f));
             camera.transform.position = p;
-            camera.transform.rotation = Quaternion.LookRotation(playerOz.transform.position - p, Vector3.up);
+            camera.transform.rotation = Quaternion.LookRotation(
+                pp - p, Vector3.up);
         }
 
         /* Beginning Game */
@@ -82,7 +86,7 @@ public class GameManager : MonoBehaviour
         spawnTimer -= Time.deltaTime;
         if(spawnTimer < 0f) {
             SpawnRowingNPC();
-            spawnTimer = 6f;
+            spawnTimer = 5f - Mathf.Max(3f, killCount * 0.02f);
         }
 
         /* Ending Game */
