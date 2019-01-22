@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class OzHuman : MonoBehaviour
 {
-    public const float LIMIT_IMPULSE = 5f;
+    public const float LIMIT_IMPULSE = 2f;
 
     public Rigidbody rigid;
 
@@ -253,23 +253,23 @@ public class OzHuman : MonoBehaviour
                 oz.rowing = false;
             } else if(!float.IsNaN(x = TRange(prog, 0.15f, 0.25f))) {
                 oz.txa = 0f;
-                oz.tya = 0f;
+                oz.tya = -10f;
                 oz.tra = 2f;
                 oz.lOff = new Vector3(0.0f, 0.0f, 0.0f);
                 oz.armSpd = 15f;
                 oz.rowing = false;
             } else if(!float.IsNaN(x = TRange(prog, 0.25f, 0.30f))) {
                 oz.txa = -90f;
-                oz.tya = 0f;
+                oz.tya = -20f;
                 oz.tra = 2f;
-                oz.lOff = new Vector3(1.7f, 0.0f, 0.5f);
+                oz.lOff = new Vector3(1.7f, 0.1f, 0.5f);
                 oz.armSpd = 15f;
                 oz.rowing = false;
             } else if(!float.IsNaN(x = TRange(prog, 0.30f, 0.5f))) {
                 oz.txa = -120f;
-                oz.tya = 0f;
+                oz.tya = -10f;
                 oz.tra = 2.5f;
-                oz.lOff = new Vector3(1.9f, 0.1f, 0.4f);
+                oz.lOff = new Vector3(1.9f, 0.2f, 0.4f);
                 oz.armSpd = 20f;
                 oz.rowing = false;
             } else if(!float.IsNaN(x = TRange(prog, 0.4f, 0.6f))) {
