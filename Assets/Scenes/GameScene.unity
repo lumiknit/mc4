@@ -1302,7 +1302,7 @@ MonoBehaviour:
   npcPrefab: {fileID: 4260852093472541525, guid: 155229497ca1d0e459351135d7ab7b14,
     type: 3}
   minRadius: 20
-  maxRadius: 390
+  maxRadius: 190
   minRingDistance: 2
   npcSpawnRate: 1
   maxLoopIteration: 70
@@ -1425,6 +1425,10 @@ PrefabInstance:
     - target: {fileID: 1757890991, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
       propertyPath: m_Name
       value: bowl
+      objectReference: {fileID: 0}
+    - target: {fileID: 1757890991, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 1757890996, guid: 6958396a414fb18439edea5c2b0e04b2, type: 3}
       propertyPath: m_LocalPosition.x
