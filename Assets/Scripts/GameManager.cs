@@ -14,10 +14,12 @@ public class GameManager : MonoBehaviour
     public GameObject ozAI;
 
     /* Game Statistics */
+    public static int gameCount;
     public static int killCount;
     public static float gameBeginningTime;
     public static float gameEndTime;
     public static float gameDuration { get { return gameEndTime - gameBeginningTime; } }
+    public static float maxSpeed;
 
     public static float spawnTimer;
 
@@ -28,11 +30,18 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        bowlSize = 500;
+        bowlSize = 200;
+
+        if(!PlayerPrefs.HasKey("gameCount")) {
+            PlayerPrefs.SetInt("gameCount", 0);
+        }
+        gameCount = PlayerPrefs.GetInt("gameCount") + 1;
+        PlayerPrefs.SetInt("gameCount", gameCount);
 
         killCount = 0;
         gameBeginningTime = Time.time;
         gameEndTime = float.NaN;
+        maxSpeed = 0f;
 
         playerOz = GameObject.Find("Oz").transform.Find("human2a").GetComponent<OzHuman>();
 
@@ -45,7 +54,10 @@ public class GameManager : MonoBehaviour
 
         fadeInPanel = GameObject.Find("FadeInPanel");
         var image = fadeInPanel.GetComponent<Image>();
+        var text = fadeInPanel.transform.GetChild(0).GetComponent<Text>();
         image.color = new Color(0f, 0f, 0f, 1f);
+        text.color = new Color(1f, 1f, 1f, 1f);
+        text.text = "O#" + gameCount;
         spawnTimer = 0f;
     }
 
@@ -81,9 +93,12 @@ public class GameManager : MonoBehaviour
         }
 
         /* Beginning Game */
-        if(Time.time - gameBeginningTime < 2f) {
+        if(Time.time - gameBeginningTime < 4f) {
             var image = fadeInPanel.GetComponent<Image>();
-            image.color = new Color(0f, 0f, 0f, 1f - (Time.time - gameBeginningTime) / 2f);
+            var text = fadeInPanel.transform.GetChild(0).GetComponent<Text>();
+            var progress = (Time.time - gameBeginningTime) / 2f;
+            image.color = new Color(0f, 0f, 0f, 1f - progress);
+            text.color = new Color(1f, 1f, 1f, 1.5f - progress);
         }   
 
         /* Respawn */
@@ -103,6 +118,11 @@ public class GameManager : MonoBehaviour
         /* Ending Game */
         if(playerOz.lassitude) {
             FinishGame();
+        } else {
+            var speed = playerOz.rigid.velocity.magnitude;
+            var kmh = speed * 3.6f;
+            maxSpeed = Mathf.Max(maxSpeed, speed);
+            GameObject.Find("SpeedText").GetComponent<Text>().text = kmh.ToString("000.00") + " km/h";
         }
 
         if(!float.IsNaN(gameEndTime))
@@ -145,6 +165,7 @@ public class GameManager : MonoBehaviour
 
     public static void RecordGameEnd() {
         gameEndTime = Time.time;
+        PlayerPrefs.SetInt("gameCount", gameCount + killCount + 1);
     }
 
 
