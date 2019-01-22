@@ -103,7 +103,7 @@ public class NpcInteraction : MonoBehaviour
                 break;
             case NpcType.Position:
                 float radius = transform.position.magnitude;
-                float percent = 100f * radius / 474;
+                float percent = 100f * radius / GameManager.bowlSize;
                 npcText = "여기는 중심으로부터 " + percent.ToString().Split('.')[0] + "%...";
                 break;
             case NpcType.EnemyCount:

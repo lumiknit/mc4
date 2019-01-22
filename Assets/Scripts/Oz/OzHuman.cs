@@ -64,6 +64,10 @@ public class OzHuman : MonoBehaviour
             UpdateArmPos(handR, shoulderR, new Vector3(0, 0, 0));
             UpdateOarPos();
             targetSphere.transform.position = targetPos;
+            if(transform.position.y < -10f)
+            {
+                MakeLassitude();
+            }
         }
         if(boat != null) {
             if(rowing) {

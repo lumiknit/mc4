@@ -13,7 +13,6 @@
 
 # Visual Studio cache directory
 .vs/
-.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -51,3 +50,5 @@ Assets/StreamingAssets/crashlytics-build.properties
 
 
 # End of https://www.gitignore.io/api/unity
+temp_auto_push.bat
+temp_interactive_push.bat
