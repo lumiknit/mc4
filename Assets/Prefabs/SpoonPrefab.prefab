@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationRate: 1
-  velocityRate: 100
-  accellerationRate: 30
+  velocityRate: 30
+  accellerationRate: 10
 --- !u!65 &5528143530888757678
 BoxCollider:
   m_ObjectHideFlags: 0

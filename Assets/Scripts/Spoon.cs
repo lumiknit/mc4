@@ -13,8 +13,8 @@ public class Spoon : MonoBehaviour
     private Vector3 aDir;
 
     public float rotationRate = 1f;
-    public float velocityRate = 100f;
-    public float accellerationRate = 30f;
+    public float velocityRate = 24f;
+    public float accellerationRate = 8f;
 
     private float rotation;
 
@@ -28,10 +28,12 @@ public class Spoon : MonoBehaviour
 
         float x = r * Mathf.Cos(theta);
         float z = r * Mathf.Sin(theta);
-        
-        Vector3 position = new Vector3(x, 82f, z);
 
-        Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 170f);
+        x = z = 0;
+        
+        Vector3 position = new Vector3(x, 43f, z);
+
+        Vector3 direction = Quaternion.Euler(0, rotation, 0) * new Vector3(0, 0, 430f);
         position -= direction;
 
         transform.position = position;
@@ -43,10 +45,10 @@ public class Spoon : MonoBehaviour
         initHeight = transform.position.y;
 
         Vector3 downVec = -Vector3.up;
-        Vector3 moveVec = Quaternion.Euler(0, rotation-90f, 0) * Vector3.right;
+        Vector3 moveVec = 5*(Quaternion.Euler(0, rotation-90f, 0) * Vector3.right);
 
-        vDir = (downVec + moveVec).normalized;
-        aDir = downVec.normalized;
+        vDir = downVec + moveVec;
+        aDir = downVec;
         rbody.AddForce(vDir * velocityRate, ForceMode.VelocityChange);
     }
 
@@ -57,6 +59,7 @@ public class Spoon : MonoBehaviour
             rotateAngle -= (initHeight - transform.position.y) * Time.fixedDeltaTime * rotationRate;
         rbody.rotation = Quaternion.Euler(rotateAngle, rotation, -90);
         rbody.AddForce(-aDir * Time.fixedDeltaTime * accellerationRate, ForceMode.VelocityChange);
+        Debug.Log(rbody.position);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -72,6 +75,8 @@ public class Spoon : MonoBehaviour
             offset = offset.normalized * Mathf.Sqrt(3);
             collision.transform.position = transform.position + offset;
             collision.rigidbody.constraints = RigidbodyConstraints.FreezeAll;
+            FixedJoint fixedJoint = collision.gameObject.AddComponent<FixedJoint>();
+            fixedJoint.connectedBody = rbody;
         }
     }
 }
