@@ -21,10 +21,14 @@ public class GameManager : MonoBehaviour
 
     public static float spawnTimer;
 
+    public static float bowlSize;
+
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
+
+        bowlSize = 500;
 
         killCount = 0;
         gameBeginningTime = Time.time;
@@ -69,9 +73,9 @@ public class GameManager : MonoBehaviour
 
         { /* Camera */
             var camera = Camera.main;
-            var pp = playerOz.transform.position;
-            var p = pp + (playerOz.transform.rotation * new Vector3(0f, 0f, -10f) + new Vector3(0f, 3f, 0f));
-            camera.transform.position = p;
+            var pp = playerOz.transform.position + new Vector3(0f, 1f, 0f);
+            var p = pp + (playerOz.transform.rotation * new Vector3(0f, 0f, -8f) + new Vector3(0f, 3f, 0f));
+            camera.transform.position = camera.transform.position * 0.95f + p * 0.05f;
             camera.transform.rotation = Quaternion.LookRotation(
                 pp - p, Vector3.up);
         }
@@ -85,8 +89,15 @@ public class GameManager : MonoBehaviour
         /* Respawn */
         spawnTimer -= Time.deltaTime;
         if(spawnTimer < 0f) {
+            if(GameObject.FindGameObjectsWithTag("Enemy").Length < 35);
             SpawnRowingNPC();
             spawnTimer = 5f - Mathf.Max(3f, killCount * 0.02f);
+        }
+
+        bowlSize -= 0.01f;
+        if(bowlSize < 50f) bowlSize = 50f;
+        else {
+            GameObject.Find("bowl").transform.localScale = new Vector3(bowlSize / 10f, bowlSize / 10f, 40);
         }
 
         /* Ending Game */
@@ -119,7 +130,9 @@ public class GameManager : MonoBehaviour
 
 
     public void SpawnRowingNPC() {
-        Vector3 p = new Vector3(Random.Range(-200f, 200f), 0.3f, Random.Range(-200f, 200f));
+        var r = Random.Range(0.05f, 0.95f) * bowlSize;
+        var th = Random.Range(0f, 2 * Mathf.PI);
+        Vector3 p = new Vector3(r * Mathf.Cos(th), 0.3f, r * Mathf.Sin(th));
         Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
     }
 
