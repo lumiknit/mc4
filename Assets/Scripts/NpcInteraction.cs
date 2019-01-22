@@ -26,7 +26,6 @@ public class NpcInteraction : MonoBehaviour
         dead = false;
 
         npcType = (NpcType)Random.Range(0, (int)NpcType.Count);
-        npcType = NpcType.Position;
     }
 
     // Update is called once per frame
