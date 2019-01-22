@@ -28,8 +28,6 @@ public class Spoon : MonoBehaviour
 
         float x = r * Mathf.Cos(theta);
         float z = r * Mathf.Sin(theta);
-
-        x = z = 0;
         
         Vector3 position = new Vector3(x, 43f, z);
 
