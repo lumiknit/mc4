@@ -64,7 +64,9 @@ public class OzHuman : MonoBehaviour
             UpdateArmPos(handR, shoulderR, new Vector3(0, 0, 0));
             UpdateOarPos();
             targetSphere.transform.position = targetPos;
-            if(transform.position.y < -10f)
+            
+            var p = new Vector3(transform.position.x, 0f, transform.position.y);
+            if(transform.position.y < -10f || spine1.transform.position.y < 0 || p.magnitude >= GameManager.bowlSize + 1)
             {
                 MakeLassitude();
             }
@@ -121,7 +123,7 @@ public class OzHuman : MonoBehaviour
     }
 
 
-    private void MakeLassitude() {
+    public void MakeLassitude() {
         lassitude = true;
         spine1.GetComponent<BoxCollider>().enabled = false;
         spine1.GetComponent<Rigidbody>().mass = 5;

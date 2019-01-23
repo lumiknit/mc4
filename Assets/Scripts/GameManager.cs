@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
 
-        bowlSize = 200;
+        bowlSize = 250;
 
         if(!PlayerPrefs.HasKey("gameCount")) {
             PlayerPrefs.SetInt("gameCount", 0);
@@ -78,6 +78,9 @@ public class GameManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.D)) {
             playerOz.action = new OzHuman.TestRowRight(playerOz);
         }
+        if(Input.GetKeyDown(KeyCode.K)) {
+            playerOz.MakeLassitude();
+        }
 
         if(Input.GetKeyDown(KeyCode.Space)) {
             playerOz.action = new OzHuman.TestHSwing1(playerOz);
@@ -87,7 +90,7 @@ public class GameManager : MonoBehaviour
             var camera = Camera.main;
             var pp = playerOz.transform.position + new Vector3(0f, 1f, 0f);
             var p = pp + (playerOz.transform.rotation * new Vector3(0f, 0f, -8f) + new Vector3(0f, 3f, 0f));
-            camera.transform.position = camera.transform.position * 0.95f + p * 0.05f;
+            camera.transform.position = camera.transform.position * 0.9f + p * 0.1f;
             camera.transform.rotation = Quaternion.LookRotation(
                 pp - p, Vector3.up);
         }
@@ -104,12 +107,12 @@ public class GameManager : MonoBehaviour
         /* Respawn */
         spawnTimer -= Time.deltaTime;
         if(spawnTimer < 0f) {
-            if(GameObject.FindGameObjectsWithTag("Enemy").Length < 35);
+            if(GameObject.FindGameObjectsWithTag("Enemy").Length < 30)
             SpawnRowingNPC();
             spawnTimer = 5f - Mathf.Max(3f, killCount * 0.02f);
         }
 
-        bowlSize -= 0.01f;
+        bowlSize -= 0.008f;
         if(bowlSize < 50f) bowlSize = 50f;
         else {
             GameObject.Find("bowl").transform.localScale = new Vector3(bowlSize / 10f, bowlSize / 10f, 40);
@@ -150,7 +153,7 @@ public class GameManager : MonoBehaviour
 
 
     public void SpawnRowingNPC() {
-        var r = Random.Range(0.05f, 0.95f) * bowlSize;
+        var r = Random.Range(0.05f, 0.6f) * bowlSize;
         var th = Random.Range(0f, 2 * Mathf.PI);
         Vector3 p = new Vector3(r * Mathf.Cos(th), 0.3f, r * Mathf.Sin(th));
         Instantiate(ozAI, p, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
